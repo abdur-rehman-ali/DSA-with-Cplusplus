@@ -22,6 +22,7 @@ class singlyLinkedList
 
     void append(node* newNode);
     void prepend(node* newNode);
+    void update(int data,int value);
     void display();
 };
 
@@ -66,6 +67,31 @@ void singlyLinkedList::prepend(node* newNode)
 }
 
 
+//This fucntion will update the value 
+void singlyLinkedList::update(int data,int value)
+{
+    if(head==NULL)
+    {
+        cout <<"Linked list is empty"<<endl;
+    }
+    else
+    {
+        node *temp=head;
+        while(temp!=NULL)
+        {
+            if (temp->data==data)
+            {
+                temp->data=value;
+                cout<<"value updated"<<endl;
+                return;
+            }
+            temp=temp->next;
+        }
+    }
+    cout<<"Value does not exist"<<endl;
+}
+
+
 //This function will display all the values in the list
 void singlyLinkedList:: display()
 {
@@ -82,13 +108,16 @@ void singlyLinkedList:: display()
             cout<<" "<<temp->data<<"-->";
             temp=temp->next;
         }
+        cout<<endl;
     }
 }
 
 
+
+
 void menu()
 {
-    int option,value;
+    int option,value,data;
    
     singlyLinkedList singlyLinkedListObj;
 
@@ -136,6 +165,11 @@ void menu()
             }
             case 3:
             {
+                cout<<"Enter the which value you want to update"<<endl;
+                cin>>data;
+                cout<<"Enter the updated value "<<endl;
+                cin>>value;
+                singlyLinkedListObj.update(data,value);
                
                 break;
             }
