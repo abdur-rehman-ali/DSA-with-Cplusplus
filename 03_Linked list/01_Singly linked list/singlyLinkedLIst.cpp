@@ -23,6 +23,7 @@ class singlyLinkedList
     void append(node* newNode);
     void prepend(node* newNode);
     void update(int data,int value);
+    void deleteValue(int value);
     void display();
 };
 
@@ -89,6 +90,26 @@ void singlyLinkedList::update(int data,int value)
         }
     }
     cout<<"Value does not exist"<<endl;
+}
+
+
+//This function will delete the value
+void singlyLinkedList::deleteValue(int value)
+{
+    if (head==NULL)
+    {
+        cout<<"List is empty";
+    }
+    else
+    {
+        if(head->data==value)
+        {
+            head=head->next;
+            cout<<"Head value deleted..."<<endl;
+        }
+
+    }
+
 }
 
 
@@ -175,7 +196,10 @@ void menu()
             }
             case 4:
             {
-                
+                cout<<"Enter the which value you want to delete"<<endl;
+                cin>>value;
+                singlyLinkedListObj.deleteValue(value);
+
                 break;
             }
             case 5:
