@@ -109,6 +109,7 @@ void DoublyLinkedList::insertNodeAfter(int value, node *newNode)
         fast=fast->next;
     }
     slow->next=newNode;
+    newNode->prev=slow;
     cout<<"Value added at tail..."<<endl;
 
 }
@@ -185,6 +186,7 @@ void DoublyLinkedList::displayInReverse()
         cout << " " << temp->data << "-->";
         temp = temp->prev;
     }
+    cout<<endl;
 }
 
 void DoublyLinkedList::display()
