@@ -73,8 +73,7 @@ void singlyLinkedList::prepend(node *newNode)
     }
     else
     {
-        node *temp = head;
-        newNode->next = temp;
+        newNode->next = head;
         head = newNode;
         cout << "Value added at head" << endl;
     }

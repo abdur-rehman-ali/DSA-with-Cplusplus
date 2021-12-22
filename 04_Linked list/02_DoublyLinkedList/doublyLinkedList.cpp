@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
 struct node
@@ -6,20 +6,181 @@ struct node
     int data;
     node *prev;
     node *next;
-}
-
-class doublyLinkedList
-{   
-    private:
-    node *head;
-    
-
 };
 
+class DoublyLinkedList
+{
+private:
+    node *head;
+
+public:
+    DoublyLinkedList()
+    {
+        head = NULL;
+    }
+
+    bool valueExist(int value);
+    void append(node *newNode);
+    void prepend(node *newNode);
+    void update(int old, int newValue);
+    void deleteValue(int value);
+    void displayInReverse();
+    void display();
+};
+
+bool DoublyLinkedList::valueExist(int value)
+{
+    if (head == NULL)
+    {
+        cout << "List is empty" << endl;
+        return false;
+    }
+    else
+    {
+        node *temp = head;
+        while (temp != NULL)
+        {
+            if (temp->data == value)
+            {
+                return true;
+            }
+            temp = temp->next;
+        }
+        return false;
+    }
+}
+
+void DoublyLinkedList::append(node *newNode)
+{
+    if (head == NULL)
+    {
+        head = newNode;
+        cout << "Value added at head" << endl;
+    }
+    else
+    {
+        node *temp = head;
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        newNode->prev = temp;
+        cout << "Value added after traversing" << endl;
+    }
+}
+
+void DoublyLinkedList::prepend(node *newNode)
+{
+    if (head == NULL)
+    {
+        head = newNode;
+        cout << "List was empty \n Value added at head..." << endl;
+    }
+    else
+    {
+        newNode->next = head;
+        head->prev = newNode;
+        head = newNode;
+        cout << "Value added at head" << endl;
+    }
+}
+
+void DoublyLinkedList::update(int old, int newValue)
+{
+    node *temp = head;
+    while (temp != NULL)
+    {
+        if (temp->data == old)
+        {
+            temp->data = newValue;
+            cout << "Value updated..." << endl;
+            break;
+        }
+
+        temp = temp->next;
+    }
+}
+
+void DoublyLinkedList::deleteValue(int value)
+{
+    if (head->data == value)
+    {
+        head = head->next;
+        cout << "Value deleted from head..." << endl;
+    }
+    else
+    {
+        node *slow = head;
+        node *fast = head->next;
+
+        while (fast->next != NULL)
+        {
+            if (fast->data == value)
+            {
+                slow->next = fast->next;
+                fast->next->prev = slow;
+                cout << "Value deleted..." << endl;
+                return;
+            }
+
+            slow = slow->next;
+            fast = fast->next;
+        }
+        if (fast->data == value)
+        {
+            slow->next = NULL;
+            cout << "Value deleted from tail..." << endl;
+        }
+    }
+}
+
+void DoublyLinkedList::displayInReverse()
+{
+
+    if (head == NULL)
+    {
+        cout << "List is currently empty..." << endl;
+        return;
+    }
+
+    node *temp = head;
+
+    //This loop will traverse though end and then we start printing element in reverse order
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+
+    //Loop below will print the list in reverse order
+    while (temp != NULL)
+    {
+        cout << " " << temp->data << "-->";
+        temp = temp->prev;
+    }
+}
+
+void DoublyLinkedList::display()
+{
+    if (head == NULL)
+    {
+        cout << "List is currently empty..." << endl;
+        return;
+    }
+    node *temp = head;
+    while (temp != NULL)
+    {
+        cout << " " << temp->data << "-->";
+        temp = temp->next;
+    }
+    cout << endl;
+}
 
 void menu()
 {
     int option, value, data;
+
+    DoublyLinkedList DoublyLinkedListObj;
 
     do
     {
@@ -33,9 +194,11 @@ void menu()
              << endl;
         cout << "4)Delete()" << endl
              << endl;
-        cout << "5)Display()" << endl
+        cout << "5)DisplayInRevers()" << endl
              << endl;
-        cout << "6)Clear screen()" << endl
+        cout << "6)Display()" << endl
+             << endl;
+        cout << "7)Clear screen()" << endl
              << endl;
         cin >> option;
 
@@ -48,45 +211,85 @@ void menu()
         }
         case 1:
         {
-            
-            
+            cout << "Enter the value to append" << endl;
+            cin >> value;
+            node *newNode = new node();
+            newNode->data = value;
+            newNode->next = NULL;
+            newNode->prev = NULL;
+            DoublyLinkedListObj.append(newNode);
+
             system("pause");
             system("cls");
             break;
         }
         case 2:
         {
-           
+            cout << "Enter the value to prepend" << endl;
+            cin >> value;
+            node *newNode = new node();
+            newNode->data = value;
+            newNode->next = NULL;
+            newNode->prev = NULL;
 
-
-           
+            DoublyLinkedListObj.prepend(newNode);
             system("pause");
             system("cls");
             break;
         }
         case 3:
         {
-           
+            cout << "Enter the which value you want to update" << endl;
+            cin >> data;
+            if (DoublyLinkedListObj.valueExist(data))
+            {
+                cout << "Enter the updated value " << endl;
+                cin >> value;
+                DoublyLinkedListObj.update(data, value);
+            }
+            else
+            {
+                cout << "That value does not exixt..." << endl;
+            }
+
             system("pause");
             system("cls");
             break;
         }
         case 4:
         {
-           
+            cout << "Enter the which value you want to delete" << endl;
+            cin >> value;
+            if (DoublyLinkedListObj.valueExist(value))
+            {
+                DoublyLinkedListObj.deleteValue(value);
+            }
+            else
+            {
+                cout << "Value does not exist..." << endl;
+            }
+
             system("pause");
             system("cls");
             break;
         }
         case 5:
         {
-           
+            DoublyLinkedListObj.displayInReverse();
 
             system("pause");
             system("cls");
             break;
         }
         case 6:
+        {
+            DoublyLinkedListObj.display();
+
+            system("pause");
+            system("cls");
+            break;
+        }
+        case 7:
         {
             system("cls");
             break;
