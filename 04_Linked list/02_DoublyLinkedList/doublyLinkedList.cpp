@@ -22,6 +22,7 @@ public:
     bool valueExist(int value);
     void append(node *newNode);
     void prepend(node *newNode);
+    void insertNodeAfter(int value, node *newNode);
     void update(int old, int newValue);
     void deleteValue(int value);
     void displayInReverse();
@@ -84,6 +85,32 @@ void DoublyLinkedList::prepend(node *newNode)
         head = newNode;
         cout << "Value added at head" << endl;
     }
+}
+
+void DoublyLinkedList::insertNodeAfter(int value, node *newNode)
+{
+
+    node *slow=head;
+    node* fast=head->next;
+
+    while(fast!=NULL)
+    {
+
+        if(slow->data==value)
+        {
+            slow->next=newNode;
+            newNode->prev=slow;
+            newNode->next=fast;
+            fast->prev=newNode;
+            cout<<"Value added..."<<endl;
+            return;
+        }
+        slow=slow->next;
+        fast=fast->next;
+    }
+    slow->next=newNode;
+    cout<<"Value added at tail..."<<endl;
+
 }
 
 void DoublyLinkedList::update(int old, int newValue)
@@ -190,15 +217,17 @@ void menu()
              << endl;
         cout << "2)Prepend()" << endl
              << endl;
-        cout << "3)Update()" << endl
+        cout << "3)Insert node after()" << endl
              << endl;
-        cout << "4)Delete()" << endl
+        cout << "4)Update()" << endl
              << endl;
-        cout << "5)DisplayInRevers()" << endl
+        cout << "5)Delete()" << endl
              << endl;
-        cout << "6)Display()" << endl
+        cout << "6)DisplayInRevers()" << endl
              << endl;
-        cout << "7)Clear screen()" << endl
+        cout << "7)Display()" << endl
+             << endl;
+        cout << "8)Clear screen()" << endl
              << endl;
         cin >> option;
 
@@ -239,6 +268,30 @@ void menu()
         }
         case 3:
         {
+            cout << "Enter the value after which you want to add node" << endl;
+            cin >> value;
+            if (DoublyLinkedListObj.valueExist(value))
+            {
+                cout << "Enter value to insert ...";
+                cin >> data;
+                node *newNode = new node();
+                newNode->data = data;
+                newNode->next = NULL;
+                newNode->prev = NULL;
+
+                DoublyLinkedListObj.insertNodeAfter(value,newNode);
+            }
+            else
+            {
+                cout << "Value does not exist..." << endl;
+            }
+
+            system("pause");
+            system("cls");
+            break;
+        }
+        case 4:
+        {
             cout << "Enter the which value you want to update" << endl;
             cin >> data;
             if (DoublyLinkedListObj.valueExist(data))
@@ -256,7 +309,7 @@ void menu()
             system("cls");
             break;
         }
-        case 4:
+        case 5:
         {
             cout << "Enter the which value you want to delete" << endl;
             cin >> value;
@@ -273,7 +326,7 @@ void menu()
             system("cls");
             break;
         }
-        case 5:
+        case 6:
         {
             DoublyLinkedListObj.displayInReverse();
 
@@ -281,7 +334,7 @@ void menu()
             system("cls");
             break;
         }
-        case 6:
+        case 7:
         {
             DoublyLinkedListObj.display();
 
@@ -289,7 +342,7 @@ void menu()
             system("cls");
             break;
         }
-        case 7:
+        case 8:
         {
             system("cls");
             break;
